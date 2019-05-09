@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pandoc -t beamer -H header.tex content.md -o slides.pdf
