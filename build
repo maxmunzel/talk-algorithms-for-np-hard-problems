@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pandoc -t beamer -H header.tex content.md -o slides.pdf
+pandoc -t beamer --from markdown+tex_math_dollars -H template/header.tex content.md -o slides.pdf

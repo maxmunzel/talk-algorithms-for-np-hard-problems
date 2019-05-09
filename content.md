@@ -1,29 +1,43 @@
-% Datenbanken I -- Einführung
-% Michael Kofler
-% September 2013
+% Einführung und Definitionen 
+% Caspar Nagy 
+% 13. Mai 2019 
 
-# Einführung
+## Gliederung
 
-## Inhalt der Lehrveranstaltung
+* Motivation
+* Definitionen
 
-* Konzepte relationaler Datenbanksysteme
-* Design von Datenbanken
-* Daten mit SQL^[Standard Query Language] abfragen und verändern
+# Motivation 
 
-Basis für alle Beispiele: MySQL
+## Motivation – Wo wir bei TGI stehen geblieben sind
 
-## Inhalt im Detail
+Viele Interessante Probleme $\in NP$
 
-* Einführung, Hello-World!-Beispiel, MySQL
-* Datenbankmodellierung (semantisch, logisch, physisch)
-* Entity-Relationship-Modelle
-* Datentypen
-* Relationships (1:1, 1:n, n:m, identifying vs. non-identifying)
-* Primary Keys, Foreign Keys, Foreign Key Constraints
-* Normalformen (1NF, 2NF, 3NF), De-Normalisierung
-* SQL-Einführung (SELECT, INSERT, UPDATE, DELETE, CREATE/ALTER/DROP TABLE)
-* Transaktionen, ACID
-* viele praktische Beispiel
+  * Löungen für \textsc{Bar Fight Prevention} (aka \textsc{Vertex Cover}) schon für $n=1000$ sehr unhandlich
+  * Laufzeit kann drastisch reduziert werden, wenn wir den Lösungsraum einschränken 
+
+Frage: 
+
+  * Für welche Problem/Parameter-Paare ist das möglich?
+  * Welche Laufzeit kann man mit Parametriesierung erreichen?
+
+# Definitionen
+
+## Definitionen
+
+Parametriesiertes Problem
+
+* $(X,k) \in \Sigma^{*} \times \mathbb{N}$, wobei $X$ die Instanz unseres Problems und $k$ die unäre Kodierung unseres Parameters ist. $*$ 
+
+FPT (Fixed Parameter Tractable)
+
+* Menge der parametrierten Probleme, für die ein Algorithmus $\mathcal{A}$ existiert, der Instanzen in Zeit $f(k) \cdot |(x,k)|^{c}$ entscheidet.
+
+XP (slice-wise polynomial) 
+
+* Menge der parametrierten Probleme, für die ein Algorithmus $\mathcal{A}$ existiert, der Instanzen in Zeit $f(k) \cdot |(x,k)|^{g(k)}$ entscheidet.
+
+
 
 ## Datenbanken versus Datenbanksysteme
 
