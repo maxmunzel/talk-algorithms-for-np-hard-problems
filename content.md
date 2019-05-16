@@ -99,6 +99,84 @@ return None
 \includegraphics[width=7cm]{vertex_random_kernel.pdf}
 \end{center}
 
+
+* Ist effizient berechnenbar 
+* Kann viele Instanzen wesentlich verkleinern
+	* hilft uns aber nicht im worst-case
+	* nutzt noch nicht unseren Parameter $k$
+
+
+## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
+
+\begin{center}
+\includegraphics[width=7cm]{vertex_random_kernel_nocolor.pdf}
+\end{center}
+
+### Frage: Wie können wir die verbleibenden Knoten entscheiden?
+
+
+## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
+
+\begin{center}
+\includegraphics[width=7cm]{vertex_random_kernel_nocolor.pdf}
+\end{center}
+
+sei $k = 4$
+
+. . .
+
+> * Es ist egal ob wir $419$ oder $533$ herauswerfen.
+> * $2$ muss immer herausgeworfen werden. 
+
+## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
+
+\begin{center}
+\includegraphics[width=7cm]{vertex_random_kernel_nocolor.pdf}
+\end{center}
+
+### Allgemein:
+
+* Knoten mit $degree(n) = 1$ können wir hereinlassen, solange dadurch nicht direkt ein Konflikt entsteht.
+* Knoten mit $degree(n) > k$ immer werden heraus geworfen.
+
+## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
+
+
+
+\colA{5cm}
+
+
+```python
+unknown = list()
+for v in G.V:
+	if degree(v) == 0:
+		accept(v)
+	elif degree(v) == 1:
+		if confict(v): 
+			reject(v)
+			k -= 1
+		else: accept(v)
+	elif degree(v) > k:
+		reject(v)
+		k -= 1
+	else:
+		unknown.append(v)
+```
+
+\colB{7cm}
+
+. . .
+
+* Läuft in Polynomialzeit 
+* Was tun mit `unknown`?
+	* $\forall v \in unknown: 1 < degree(v) < k$ 
+	* $\Rightarrow$ also höchstens...
+		* $k^2$ ungelöste Konflikte
+		* $2k^2$ Konfliktparteien
+		* $\binom{2k^2}{k}$ Möglichkeiten
+
+\colEnd
+
 # Definitionen
 
 ## Definitionen 1/2
