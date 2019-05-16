@@ -143,39 +143,53 @@ sei $k = 4$
 
 
 
-\colA{5cm}
+\colA{4cm}
 
 
 ```python
+accepted = list()
+denied = list()
 unknown = list()
 for v in G.V:
 	if degree(v) == 0:
-		accept(v)
+		accepted += v
 	elif degree(v) == 1:
-		if confict(v): 
-			reject(v)
+		if confict(v: 
+			rejected += v
 			k -= 1
-		else: accept(v)
+		else: accepted += v
 	elif degree(v) > k:
-		reject(v)
+		rejected += v
 		k -= 1
 	else:
-		unknown.append(v)
+		unknown += v
+	if k < 0:
+		fail()
+if len(G.subplot(unknown + accepted).edges) > k*k:
+	fail()
+
 ```
 
-\colB{7cm}
+\colB{8cm}
 
-. . .
 
-* Läuft in Polynomialzeit 
-* Was tun mit `unknown`?
-	* $\forall v \in unknown: 1 < degree(v) < k$ 
-	* $\Rightarrow$ also höchstens...
-		* $k^2$ ungelöste Konflikte
-		* $2k^2$ Konfliktparteien
-		* $\binom{2k^2}{k}$ Möglichkeiten
+> * Läuft in Polynomialzeit 
+> * Was tun mit `unknown`?
+>     * $\forall v \in unknown: degree(v) \leq k$ 
+>     * $\Rightarrow$ also höchstens...
+>          * $k^2$ ungelöste Konflikte
+>          * $2 \cdot k^2$ Konfliktparteien
+>          * $\binom{2k^2}{k}$ Checks
+>          * $k=10, \binom{200}{10} \approx 2,24*10^{16}$ 
+>     * da außerdem: $\forall v \in unknown: degree(v) > 1$ 
+>          * im Worst Case (Kreis) 1 Mensch pro Konflikt
+>          * also nur noch $\binom{k^2}{k}$ Checks
+>          * $k=10, \binom{100}{10} \approx 1,73*10^{13}$ Checks 
+>          * $\Rightarrow$ einige Stunden auf einem Laptop
 
+	
 \colEnd
+
 
 # Definitionen
 
