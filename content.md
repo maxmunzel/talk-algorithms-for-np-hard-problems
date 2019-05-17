@@ -154,7 +154,7 @@ for v in G.V:
 	if degree(v) == 0:
 		accepted += v
 	elif degree(v) == 1:
-		if confict(v: 
+		if confict(v): 
 			rejected += v
 			k -= 1
 		else: accepted += v
@@ -177,7 +177,7 @@ if len(G.subplot(unknown + accepted).edges) > k*k:
 > * Was tun mit `unknown`?
 >     * $\forall v \in unknown: degree(v) \leq k$ 
 >     * $\Rightarrow$ also höchstens...
->          * $k^2$ ungelöste Konflikte
+>          * $\sum_{v\in unknown}^{} degree(v) \leq k^2$
 >          * $2 \cdot k^2$ Konfliktparteien
 >          * $\binom{2k^2}{k}$ Checks
 >          * $k=10, \binom{200}{10} \approx 2,24*10^{16}$ 
@@ -190,6 +190,12 @@ if len(G.subplot(unknown + accepted).edges) > k*k:
 	
 \colEnd
 
+
+## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
+
+\begin{center}
+\includegraphics[width=8cm]{random_kernel.pdf}
+\end{center}
 
 # Definitionen
 
