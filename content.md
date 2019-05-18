@@ -71,7 +71,8 @@ return None
 
 * `solution(candidate) wird $\binom{n}{k}$ mal aufgerufen
 * sei $n=1000, k=10: \binom{1000}{10} \approx 2,63 * 10^{23}$
-	* terminiert nach einigen Jahren auf einem state-of-the-art Supercomputer
+	* terminiert nach einigen Jahrzehnten auf einem state-of-the-art Supercomputer
+
 
 ### Noch immer unbefriedigend. Können wir den Suchraum weiter einschränken?
 
@@ -96,7 +97,7 @@ return None
 
 ## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
 \begin{center}
-\includegraphics[width=7cm]{vertex_random_kernel.pdf}
+\includegraphics[width=7cm]{vertex_random_kernel_nocolor.pdf}
 \end{center}
 
 
@@ -106,13 +107,6 @@ return None
 	* nutzt noch nicht unseren Parameter $k$
 
 
-## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
-
-\begin{center}
-\includegraphics[width=7cm]{vertex_random_kernel_nocolor.pdf}
-\end{center}
-
-### Frage: Wie können wir die verbleibenden Knoten entscheiden?
 
 
 ## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
@@ -134,10 +128,10 @@ sei $k = 4$
 \includegraphics[width=7cm]{vertex_random_kernel_nocolor.pdf}
 \end{center}
 
-### Allgemein:
+Allgemein:
 
 * Knoten mit $degree(n) = 1$ können wir hereinlassen, solange dadurch nicht direkt ein Konflikt entsteht.
-* Knoten mit $degree(n) > k$ immer werden heraus geworfen.
+* Knoten mit $degree(n) > k$ werden immer heraus geworfen.
 
 ## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
 
@@ -176,10 +170,10 @@ if len(G.subplot(unknown + accepted).edges) > k*k:
 > * Läuft in Polynomialzeit 
 > * Was tun mit `unknown`?
 >     * $\forall v \in unknown: degree(v) \leq k$ 
->     * $\Rightarrow$ also höchstens...
+>     * $\Rightarrow$
 >          * $\sum_{v\in unknown}^{} degree(v) \leq k^2$
->          * $2 \cdot k^2$ Konfliktparteien
->          * $\binom{2k^2}{k}$ Checks
+>          * $\leq 2 \cdot k^2$ Konfliktparteien
+>          * $\leq \binom{2k^2}{k}$ Checks
 >          * $k=10, \binom{200}{10} \approx 2,24*10^{16}$ 
 >     * da außerdem: $\forall v \in unknown: degree(v) > 1$ 
 >          * im Worst Case (Kreis) 1 Mensch pro Konflikt
@@ -196,6 +190,64 @@ if len(G.subplot(unknown + accepted).edges) > k*k:
 \begin{center}
 \includegraphics[width=8cm]{random_kernel.pdf}
 \end{center}
+
+## Beispiel – \textsc{Bar Fight Prevention} – Kernelization  
+
+### Fazit
+
+* Kernelization verkleinert bestimmte Instanzen, teilweise drastisch 
+* Kernelization mit Paramerter kann viele worst-case-Instanzen abfangen und
+  dadurch die Laufzeit begrenzen
+* Fortgeschrittene Techniken im nächsten Vortrag
+
+## Beispiel – \textsc{Bar Fight Prevention} – Weitere Ansätze
+
+
+\begin{center}
+\includegraphics[width=6.5cm]{random_kernel_nocolor.pdf}
+\end{center}
+
+. . .
+
+> * Jeder Konflikt muss gelöst werden.
+> * Normalerweise $2^{|E|}$ Checks
+> * Da aber jeder Konflikt gelöst werden muss und die Lösung nur $k$ Knoten enthalten darf:
+>     * Abbruch nach $k$ Rekursionen
+>     * Also nur $2^k$ Checks
+
+## Beispiel - \textsc{Bar Fight Prevention} – Bounded Search Trees
+
+
+```python
+def bounded_search(G, k, solution=[]):
+    if k == 0:
+        return []
+    v1, v2 = G.random_edge()
+    for v in (v1, v2):
+        g = G.copy()
+        g.remove_node(v)
+        if len(g.edges()) == 0:
+            return solution + [v]
+    g1 = G.copy()
+    g2 = G.copy()
+    g1.remove_node(v1)
+    g2.remove_node(v2)
+    return max(
+        bounded_search(g1, k-1, solution + [v1]),
+        bounded_search(g2, k-1, solution + [v2])
+    )
+```
+
+
+## Beispiel - \textsc{Bar Fight Prevention} - Fazit
+
+* exponentieller Worst-case ohne Parametrisierung
+* Parametrisierung + Brute Force polynomiell mit Laufzeit  $\binom{n}{k} \in \mathcal{O}(n^k)$
+	* jedoch nur praktikabel für kleine k 
+* Parametrisierung + Brute Force + Kernelization in $\binom{k^2}{k} * n^{\mathcal{O}(1)}$
+* Bounded Search Trees in $2^k * k * n^{\mathcal{O}(1)}$
+
+## Beispiel  
 
 # Definitionen
 
